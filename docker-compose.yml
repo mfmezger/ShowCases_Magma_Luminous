@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  handwriting:
+    build: .
+    # image: handwriting
+    # env_file:
+    #   - .env
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+
+  # number:
+  #     build: number_detection/Dockerfile
+  #     image: wildfly_server
+  #     ports:
+  #       - "8001:8001"
