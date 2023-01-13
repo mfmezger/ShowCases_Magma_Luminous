@@ -18,4 +18,4 @@ RUN poetry install --no-root --no-dev
 # moving the complete app as well as the stored models into the docker workspace
 COPY . /app
 
-ENTRYPOINT ["streamlit", "run", "detection/hello.py", "--server.port=443", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "detection/hello.py", "--server.port=80", "--server.address=0.0.0.0"]
