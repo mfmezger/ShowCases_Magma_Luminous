@@ -18,5 +18,4 @@ RUN poetry install --no-root --no-dev
 # moving the complete app as well as the stored models into the docker workspace
 COPY . /app
 
-ENTRYPOINT ["streamlit", "run", "handwriting_detection/demo.py", "--server.port=8000", "--server.address=0.0.0.0"]
-CMD ["streamlit", "run", "number_detection/extract_numbers_frontend.py", "--server.port", " 8000"]
+ENTRYPOINT ["streamlit", "run", "detection/hello.py", "--server.port=8000", "--server.address=0.0.0.0"]

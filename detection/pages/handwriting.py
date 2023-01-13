@@ -3,8 +3,6 @@ import json
 from dotenv import dotenv_values
 from aleph_alpha_client import AlephAlphaModel
 from aleph_alpha_client import Document, ImagePrompt, QaRequest
-from typing import List
-from aleph_alpha_client import Prompt, SemanticEmbeddingRequest, SemanticRepresentation, SummarizationRequest, EvaluationRequest, Document, ImagePrompt, QaRequest, Prompt, SemanticEmbeddingRequest, SemanticRepresentation, SummarizationRequest, EvaluationRequest
 from PIL import Image
 import pandas as pd
 from uuid import uuid4
@@ -25,8 +23,9 @@ def extract_numbers(file_path):
         score_answer = result[1][0].score
 
         return result_answer, score_answer
-    except:
+    except Exception as e:
         return "No numbers found", 0
+
 
 def show_image(id):
     # display image
@@ -34,6 +33,7 @@ def show_image(id):
     # give the user the ability to turn the image with buttons right or left
 
     # save the image
+
 
 def start(id):
 
@@ -67,17 +67,17 @@ def start(id):
     bottom = height
     image4 = image.crop((left, top, right, bottom))
 
-    # save every image in the splitted_image folder
-    image1.save(f"splitted_image/{id}_1.png")
-    image2.save(f"splitted_image/{id}_2.png")
-    image3.save(f"splitted_image/{id}_3.png")
-    image4.save(f"splitted_image/{id}_4.png")
+    # save every image in the detection/splitted_image folder
+    image1.save(f"detection/splitted_image/{id}_1.png")
+    image2.save(f"detection/splitted_image/{id}_2.png")
+    image3.save(f"detection/splitted_image/{id}_3.png")
+    image4.save(f"detection/splitted_image/{id}_4.png")
 
     # extract numbers from each part
-    result1_answer, result1_score = extract_numbers(f"splitted_image/{id}_1.png")
-    result2_answer, result2_score = extract_numbers(f"splitted_image/{id}_2.png")
-    result3_answer, result3_score = extract_numbers(f"splitted_image/{id}_3.png")
-    result4_answer, result4_score = extract_numbers(f"splitted_image/{id}_4.png")
+    result1_answer, result1_score = extract_numbers(f"detection/splitted_image/{id}_1.png")
+    result2_answer, result2_score = extract_numbers(f"detection/splitted_image/{id}_2.png")
+    result3_answer, result3_score = extract_numbers(f"detection/splitted_image/{id}_3.png")
+    result4_answer, result4_score = extract_numbers(f"detection/splitted_image/{id}_4.png")
 
     print("1: ", result1_answer)
     print("2: ", result2_answer)
@@ -85,15 +85,20 @@ def start(id):
     print("4: ", result4_answer)
 
     # save it to json
-    with open('result.json', 'w') as fp:
+    with open("result.json", "w") as fp:
         json.dump(result1_answer, fp)
         json.dump(result2_answer, fp)
         json.dump(result3_answer, fp)
         json.dump(result4_answer, fp)
-    
 
-
-    df = pd.DataFrame({"1. Slice": [result1_answer, result1_score], "2. Slice": [result2_answer, result2_score], "3. Slice": [result4_answer, result4_score], "4. Slice": [result4_answer, result4_score], })
+    df = pd.DataFrame(
+        {
+            "1. Slice": [result1_answer, result1_score],
+            "2. Slice": [result2_answer, result2_score],
+            "3. Slice": [result3_answer, result3_score],
+            "4. Slice": [result4_answer, result4_score],
+        }
+    )
     df.index = ["Text", "Score"]
 
     if result1_score < 0.3:
@@ -104,24 +109,23 @@ def start(id):
         df["3. Slice"] = " "
     if result4_score < 0.3:
         df["4. Slice"] = " "
-        
+
     st.table(df)
 
     # bilder aufklappbar.
     with st.expander("See explanation"):
         col1, col2 = st.columns(2)
-        col1.image(f"splitted_image/{id}_1.png", caption=f"{result1_answer} Score: {result1_score}", use_column_width=True)
+        col1.image(f"detection/splitted_image/{id}_1.png", caption=f"{result1_answer} Score: {result1_score}", use_column_width=True)
         # show the result
-        col2.image(f"splitted_image/{id}_2.png", caption=f"{result2_answer} Score:{result2_score}", use_column_width=True)
+        col2.image(f"detection/splitted_image/{id}_2.png", caption=f"{result2_answer} Score:{result2_score}", use_column_width=True)
         # show the result
 
         col3, col4 = st.columns(2)
-        col3.image(f"splitted_image/{id}_3.png", caption=f"{result3_answer} Score: {result3_score}", use_column_width=True)
+        col3.image(f"detection/splitted_image/{id}_3.png", caption=f"{result3_answer} Score: {result3_score}", use_column_width=True)
         # show the result
 
-        col4.image(f"splitted_image/{id}_4.png", caption=f"{result4_answer} Score:{result4_score}", use_column_width=True)
+        col4.image(f"detection/splitted_image/{id}_4.png", caption=f"{result4_answer} Score:{result4_score}", use_column_width=True)
         # show the result
-
 
 
 st.set_page_config(
@@ -135,11 +139,11 @@ st.title("Handwriting Detector")
 st.sidebar.title("Adesso Data & Analytics")
 # Sidebar display logo
 st.sidebar.text("CC AI & Data Science")
-st.sidebar.image("handwriting_detection/ressources/white.png", use_column_width=True)
+st.sidebar.image("detection/ressources/white.png", use_column_width=True)
 
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
-    # generate random uuid 
+    # generate random uuid
     id = uuid4()
 
     # store file to disk
@@ -148,9 +152,3 @@ if uploaded_file is not None:
     show_image(id)
     if st.button("Start"):
         start(id)
-
-
-
-
-
-
