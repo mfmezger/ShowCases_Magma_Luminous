@@ -79,6 +79,10 @@ def start(id):
     result3_answer, result3_score = extract_numbers(f"detection/splitted_image/{id}_3.png")
     result4_answer, result4_score = extract_numbers(f"detection/splitted_image/{id}_4.png")
 
+    # generate prediction for hole image
+    result_answer, score_answer = extract_numbers(f"{id}.png")
+
+    print("Ganzes Bild: ", result_answer)
     print("1: ", result1_answer)
     print("2: ", result2_answer)
     print("3: ", result3_answer)
