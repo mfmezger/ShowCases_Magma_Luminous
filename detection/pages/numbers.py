@@ -114,16 +114,16 @@ def start(id):
     # bilder aufklappbar.
     with st.expander("See explanation"):
         col1, col2 = st.columns(2)
-        col1.image(f"detection/splitted_image/{id}_1.png", caption=f"{result1.answers[0].answer} Score: {result1.answers[0].score}", use_column_width=True)
+        col1.image(f"detection/splitted_image/{id}_1.png", caption=f"{result1_answer} Score: {result1_score}", use_column_width=True)
         # show the result
-        col2.image(f"detection/splitted_image/{id}_2.png", caption=f"{result2.answers[0].answer} Score:{result2.answers[0].score}", use_column_width=True)
+        col2.image(f"detection/splitted_image/{id}_2.png", caption=f"{result2_answer} Score:{result2_score}", use_column_width=True)
         # show the result
 
         col3, col4 = st.columns(2)
-        col3.image(f"detection/splitted_image/{id}_3.png", caption=f"{result3.answers[0].answer} Score: {result3.answers[0].score}", use_column_width=True)
+        col3.image(f"detection/splitted_image/{id}_3.png", caption=f"{result3_answer} Score: {result3_score}", use_column_width=True)
         # show the result
 
-        col4.image(f"detection/splitted_image/{id}_4.png", caption=f"{result4.answers[0].answer} Score:{result4.answers[0].score}", use_column_width=True)
+        col4.image(f"detection/splitted_image/{id}_4.png", caption=f"{result4_answer} Score:{result4_score}", use_column_width=True)
         # show the result
 
 
