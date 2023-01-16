@@ -24,7 +24,7 @@ def extract_numbers(file_path):
 
         return result_answer, score_answer
     except Exception as e:
-        return "No numbers found", 0
+        return "Text not found", 0
 
 
 def show_image(id):
@@ -82,7 +82,7 @@ def start(id):
     # generate prediction for hole image
     result_answer, score_answer = extract_numbers(f"{id}.png")
 
-    print("Ganzes Bild: ", result_answer)
+    st.text(f"Ganzes Bild: {result_answer}")
     print("1: ", result1_answer)
     print("2: ", result2_answer)
     print("3: ", result3_answer)
