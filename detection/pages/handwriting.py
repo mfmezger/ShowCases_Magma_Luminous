@@ -147,9 +147,9 @@ st.sidebar.text("CC AI & Data Science")
 st.sidebar.image("detection/ressources/white.png", use_column_width=True)
 
 st.markdown(
-    """Hi willkommen bei unser Handwriting Detection Demo! Um die Demo auszuprobieren bitte ein hochkantes Bild von einer Handschrift hochladen.
-Wenn die Ausrichtung stimmt auf Start drücken. Dann wird das Bild prozessiert, das Bild wird dabei einmal als ganzes erkannt und dann nocheinmal in 4 Bereiche zerlegt.
-Das Ergebnis wird dann angezeigt, einmal für das gesamte Bild und einmal für die vier Zerlegten Bilder. Wenn man auf Show Explanations drückt werden die vier zerlegten
+    """Hi, Willkommen bei unserer Handwriting Detection Demo! Um die Demo auszuprobieren bitte ein Bild hochkant von einer Handschrift hochladen.
+Wenn die Ausrichtung stimmt auf Start drücken. Dann wird das Bild prozessiert, das Bild wird dabei einmal als Ganzes erkannt und dann noch einmal in 4 Bereiche zerlegt.
+Das Ergebnis wird dann angezeigt, einmal für das gesamte Bild und einmal für die vier Zerlegten Bilder. Wenn man auf Show Explanations drückt, werden die vier zerlegten
 Bereiche angezeigt.
 """
 )
