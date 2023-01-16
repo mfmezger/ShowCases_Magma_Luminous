@@ -83,6 +83,7 @@ def start(id):
     result_answer, score_answer = extract_numbers(f"{id}.png")
 
     st.text(f"Ganzes Bild: {result_answer}")
+
     print("1: ", result1_answer)
     print("2: ", result2_answer)
     print("3: ", result3_answer)
@@ -144,6 +145,14 @@ st.sidebar.title("Adesso Data & Analytics")
 # Sidebar display logo
 st.sidebar.text("CC AI & Data Science")
 st.sidebar.image("detection/ressources/white.png", use_column_width=True)
+
+st.markdown(
+    """Hi willkommen bei unser Handwriting Detection Demo! Um die Demo auszuprobieren bitte ein hochkantes Bild von einer Handschrift hochladen.
+Wenn die Ausrichtung stimmt auf Start drücken. Dann wird das Bild prozessiert, das Bild wird dabei einmal als ganzes erkannt und dann nocheinmal in 4 Bereiche zerlegt.
+Das Ergebnis wird dann angezeigt, einmal für das gesamte Bild und einmal für die vier Zerlegten Bilder. Wenn man auf Show Explanations drückt werden die vier zerlegten
+Bereiche angezeigt.
+"""
+)
 
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
