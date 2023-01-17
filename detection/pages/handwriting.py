@@ -2,7 +2,7 @@ import streamlit as st
 import json
 from dotenv import dotenv_values
 from aleph_alpha_client import AlephAlphaModel
-from aleph_alpha_client import Document, ImagePrompt, QaRequest
+from aleph_alpha_client import ImagePrompt, CompletionRequest, Prompt  # QaRequest,Document
 from PIL import Image
 import pandas as pd
 from uuid import uuid4
@@ -13,13 +13,22 @@ def extract_numbers(file_path):
     config = dotenv_values(".env")
     model = AlephAlphaModel.from_model_name(model_name="luminous-extended", token=config["AA_TOKEN"])
     img = ImagePrompt.from_file(file_path)
-    prompt = [img]
-    document = Document.from_prompt(prompt)
+    # prompt = [img]
+    # document = Document.from_prompt(prompt)
+    prompt = Prompt(
+        [
+            ImagePrompt.from_file(file_path),
+            "Q: What does the handwriting say?",
+        ]
+    )
     # request = QaRequest(query=request.question, documents=[document])
-    request = QaRequest(query="Q: What is the text? A: ", documents=[document])
-    result = model.qa(request)
+    request = CompletionRequest(prompt=prompt)
+
+    # request = QaRequest(query="Du bis eine KI die Text aus Bildern liest. Was steht in dem Bild bitte auf deutsch antworten. Antwort:", documents=[document])
+    result = model.complete(request)
     try:
-        result_answer = result[1][0].answer
+        # result_answer = result[1][0].answer
+        result_answer = result[1][0].completion
         score_answer = result[1][0].score
 
         return result_answer, score_answer
