@@ -11,12 +11,12 @@ from uuid import uuid4
 def extract_numbers(file_path) -> list:
 
     config = dotenv_values(".env")
-    model = AlephAlphaModel.from_model_name(model_name="luminous-extended", token=config["AA_TOKEN"])
+    model = AlephAlphaModel.from_model_name(model_name="luminous-base", token=config["AA_TOKEN"])
     img = ImagePrompt.from_file(file_path)
     prompt = [img]
     document = Document.from_prompt(prompt)
     # request = QaRequest(query=request.question, documents=[document])
-    request = QaRequest(query="Q: What is the number near the line? A: ", documents=[document])
+    request = QaRequest(query="Q: What is the handwritten text?", documents=[document])
     result = model.qa(request)
     try:
         result_answer = result[1][0].answer
