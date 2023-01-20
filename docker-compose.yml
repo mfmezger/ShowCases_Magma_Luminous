@@ -1,5 +1,8 @@
 version: "3.8"
 
+networks:
+  web:
+    name: traefik_web
 services:
   traefik:
       image: traefik:v2.6
@@ -27,7 +30,7 @@ services:
         - /var/run/docker.sock:/var/run/docker.sock:ro
         - ./letsencrypt:/letsencrypt
       networks:
-        - web
+        - trafik_web
   handwriting:
     build: .
     # image: handwriting
@@ -43,9 +46,7 @@ services:
 
 
 
-networks:
-  web:
-    name: traefik_web
+
 
 
 
