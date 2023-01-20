@@ -31,16 +31,21 @@ services:
   handwriting:
     build: .
     # image: handwriting
-    # env_file:
-    #   - .env
     ports:
       - "8001:8001"
     restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.rule=Host(`http://magma.westeurope.cloudapp.azure.com/`)"
+    networks:
+      - traefik_web
 
 
 
 
-
+networks:
+  web:
+    name: traefik_web
 
 
 
