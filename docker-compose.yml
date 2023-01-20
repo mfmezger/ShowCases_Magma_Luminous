@@ -17,7 +17,7 @@ services:
         # Vermeidet, dass wir den resolver in jedem container mit "traefik.http.routers.https.tls.certresolver=le" angeben muessen
         - "--entrypoints.https.http.tls.certResolver=le"
         - "--certificatesresolvers.le.acme.tlschallenge=true"
-        - "--certificatesresolvers.le.acme.email=deine@mail.de"
+        - "--certificatesresolvers.le.acme.email=marc.mezger@adesso.de"
         - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
       ports:
         - "80:80"
