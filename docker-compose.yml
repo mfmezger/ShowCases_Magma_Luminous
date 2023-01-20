@@ -38,8 +38,13 @@ services:
       - "8001:8001"
     restart: always
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nginx.rule=Host(`magma.westeurope.cloudapp.azure.com`)"
+      traefik.enable: true
+      traefik.http.services.stream-svc.loadbalancer.server.port: 3838
+      traefik.http.routers.stream-rtr.rule: Host("magma.westeurope.cloudapp.azure.com") && PathPrefix("/stream/")
+      traefik.http.routers.stream-rtr.service: stream-svc
+      traefik.http.routers.stream-rtr.entrypoints: https
+      traefik.http.middlewares.stream-strippath.stripprefix.prefixes: /stream
+      traefik.http.routers.stream-rtr.middlewares: stream-strippath
     networks:
       - web
 
