@@ -16,6 +16,6 @@ COPY ./pyproject.toml ./poetry.lock* /app/
 RUN poetry install --no-root --no-dev
 
 # moving the complete app as well as the stored models into the docker workspace
-COPY . /app
+COPY ./detection /app
 
 ENTRYPOINT ["streamlit", "run", "detection/hello.py", "--server.port=8001", "--server.address=0.0.0.0"]
