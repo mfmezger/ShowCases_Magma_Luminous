@@ -1,8 +1,6 @@
 version: "3.8"
 
-networks:
-  web:
-    name: traefik_web
+
 services:
   traefik:
       image: traefik:v2.6
@@ -30,7 +28,7 @@ services:
         - /var/run/docker.sock:/var/run/docker.sock:ro
         - ./letsencrypt:/letsencrypt
       networks:
-        - trafik_web
+        - web
   handwriting:
     build: .
     # image: handwriting
@@ -41,9 +39,11 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.nginx.rule=Host(`http://magma.westeurope.cloudapp.azure.com/`)"
     networks:
-      - traefik_web
+      - web
 
-
+networks:
+  web:
+    name: traefik_web
 
 
 
