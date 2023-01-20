@@ -37,7 +37,7 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nginx.rule=Host(`http://magma.westeurope.cloudapp.azure.com`)"
+      - "traefik.http.routers.nginx.rule=Host(`magma.westeurope.cloudapp.azure.com`)"
     networks:
       - web
 
