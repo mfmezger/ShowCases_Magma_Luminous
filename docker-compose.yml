@@ -34,12 +34,10 @@ services:
   handwriting:
     build: .
     # image: handwriting
-    ports:
-      - "8001:8001"
     restart: always
     labels:
       traefik.enable: true
-      traefik.http.services.stream-svc.loadbalancer.server.port: 3838
+      traefik.http.services.stream-svc.loadbalancer.server.port: 8001
       traefik.http.routers.stream-rtr.rule: Host("magma.westeurope.cloudapp.azure.com")
       traefik.http.routers.stream-rtr.service: stream-svc
       traefik.http.routers.stream-rtr.entrypoints: https
