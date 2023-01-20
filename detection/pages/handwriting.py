@@ -7,6 +7,7 @@ from aleph_alpha_client import (
     Prompt,
 )  # QaRequest,Document
 from uuid import uuid4
+from PIL import Image
 
 
 def extract_numbers(file_path):
