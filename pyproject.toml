@@ -11,6 +11,7 @@ streamlit = "^1.17.0"
 aleph-alpha-client = "^2.7.1"
 python-dotenv = "^0.21.0"
 transformers = "^4.26.0"
+torch = "^1.13.1"
 
 
 [build-system]
