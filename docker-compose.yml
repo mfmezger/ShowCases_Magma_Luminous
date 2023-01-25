@@ -2,35 +2,6 @@ version: "3.8"
 
 
 services:
-  traefik:
-      image: traefik:v2.7
-      restart: always
-      command:
-        # Experimentell, um das Dashboard ohne Zugriffsschutz aufzurufen
-        #- "--api.insecure=true"
-        - "--providers.docker"
-        - "--providers.docker.exposedByDefault=false"
-        - "--providers.docker.network=traefik_web"
-        - "--entrypoints.http.address=:80"
-        - "--entrypoints.http.http.redirections.entrypoint.to=https"
-        - "--entrypoints.http.http.redirections.entrypoint.scheme=https"
-        - "--entrypoints.https.address=:443"
-        # Vermeidet, dass wir den resolver in jedem container mit "traefik.http.routers.https.tls.certresolver=le" angeben muessen
-        - "--entrypoints.https.http.tls.certResolver=le"
-        - "--certificatesresolvers.le.acme.tlschallenge=true"
-        - "--certificatesresolvers.le.acme.email=marc.mezger@adesso.de"
-        - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
-
-      # labels:
-      ports:
-        - "80:80"
-        - "443:443"
-        # - "8080:8080"
-      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock:ro
-        - ./letsencrypt:/letsencrypt
-      networks:
-        - web
   handwriting:
     build: .
     # image: handwriting
@@ -38,7 +9,7 @@ services:
     labels:
       traefik.enable: true
       traefik.http.services.stream-svc.loadbalancer.server.port: 8001
-      traefik.http.routers.stream-rtr.rule: Host("magma.westeurope.cloudapp.azure.com")
+      traefik.http.routers.stream-rtr.rule: Host("magma.ai-adesso.de")
       traefik.http.routers.stream-rtr.service: stream-svc
       traefik.http.routers.stream-rtr.entrypoints: https
       # traefik.http.middlewares.stream-strippath.stripprefix.prefixes: /stream
@@ -49,32 +20,4 @@ services:
 networks:
   web:
     name: traefik_web
-
-
-
-
-
-
-
-
-
-
-
-  # nginx:
-  #   image: nginx:1.23.3-alpine
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./data/nginx:/etc/nginx/conf.d
-  #     - ./data/certbot/conf:/etc/letsencrypt
-  #     - ./data/certbot/www:/var/www/certbot
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-  # certbot:
-  #   image: certbot/certbot
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./data/certbot/conf:/etc/letsencrypt
-  #     - ./data/certbot/www:/var/www/certbot
-  #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    external: true
