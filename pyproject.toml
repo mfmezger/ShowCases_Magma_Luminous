@@ -12,6 +12,7 @@ aleph-alpha-client = "^2.7.1"
 python-dotenv = "^0.21.0"
 transformers = "^4.26.0"
 torch = "^1.13.1"
+pytesseract = "^0.3.10"
 
 
 [build-system]
