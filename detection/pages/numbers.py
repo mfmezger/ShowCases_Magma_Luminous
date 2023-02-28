@@ -1,17 +1,29 @@
-import streamlit as st
+"""Script for the Numbers Demo.
+
+This is a streamlit gui. It is used to upload an image and extract the numbers from it.
+"""
 import json
-from dotenv import dotenv_values
-from aleph_alpha_client import AlephAlphaModel
-from aleph_alpha_client import Document, ImagePrompt, QaRequest
-from PIL import Image
-import pandas as pd
 from uuid import uuid4
+
+import pandas as pd
+import streamlit as st
+from aleph_alpha_client import AlephAlphaModel, Document, ImagePrompt, QaRequest
+from dotenv import dotenv_values
+from PIL import Image
 
 
 def extract_numbers(file_path) -> list:
+    """Extract the number from the image using the.
 
+    qa endpoint from aleph alphas luminous model.
+
+    :param file_path: path to the image
+    :type file_path: str
+    :return: list with the number and the score
+    :rtype: list
+    """
     config = dotenv_values(".env")
-    model = AlephAlphaModel.from_model_name(model_name="luminous-base", token=config["AA_TOKEN"])
+    model = AlephAlphaModel.from_model_name(model_name="luminous-extended", token=config["AA_TOKEN"])
     img = ImagePrompt.from_file(file_path)
     prompt = [img]
     document = Document.from_prompt(prompt)
@@ -28,10 +40,11 @@ def extract_numbers(file_path) -> list:
 
 
 def start(id):
+    """Start the processing for the number extraction.
 
-    config = dotenv_values(".env")
-    model = AlephAlphaModel.from_model_name(model_name="luminous-extended", token=config["AA_TOKEN"])
-
+    :param id: id of the uploaded file
+    :type id: str
+    """
     # load image with pillow
     image = Image.open(f"{id}.png")
 
