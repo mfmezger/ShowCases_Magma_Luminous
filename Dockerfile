@@ -4,9 +4,9 @@ WORKDIR /app
 ENV PYTHONPATH "${PYTHONPATH}:/"
 ENV PORT=8000
 
-RUN apt install tesseract-ocr
-RUN apt install libtesseract-dev
-
+# install tesseract
+RUN apt-get update
+RUN apt-get install -y tesseract-ocr tesseract-ocr-eng tesseract-ocr-deu poppler-utils
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org/ | POETRY_HOME=/opt/poetry python && \
     cd /usr/local/bin && \

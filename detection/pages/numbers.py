@@ -13,14 +13,12 @@ from PIL import Image
 
 
 def extract_numbers(file_path) -> list:
-    """Extract the number from the image using the.
+    """Extracts numbers from a image using luminous magma adapter from aleph alpha.
 
-    qa endpoint from aleph alphas luminous model.
-
-    :param file_path: path to the image
+    :param file_path: Path to stored file
     :type file_path: str
-    :return: list with the number and the score
-    :rtype: list
+    :return: Model Response divided in results_answer and the score.
+    :rtype: str, int
     """
     config = dotenv_values(".env")
     model = AlephAlphaModel.from_model_name(model_name="luminous-extended", token=config["AA_TOKEN"])
@@ -28,14 +26,14 @@ def extract_numbers(file_path) -> list:
     prompt = [img]
     document = Document.from_prompt(prompt)
     # request = QaRequest(query=request.question, documents=[document])
-    request = QaRequest(query="Q: What is the handwritten text?", documents=[document])
+    request = QaRequest(query="Q: What is the number near the line? A: ", documents=[document])
     result = model.qa(request)
     try:
         result_answer = result[1][0].answer
         score_answer = result[1][0].score
 
         return result_answer, score_answer
-    except Exception as e:
+    except Exception:
         return "No numbers found", 0
 
 
@@ -127,16 +125,32 @@ def start(id):
     # bilder aufklappbar.
     with st.expander("See explanation"):
         col1, col2 = st.columns(2)
-        col1.image(f"detection/splitted_image/{id}_1.png", caption=f"{result1_answer} Score: {result1_score}", use_column_width=True)
+        col1.image(
+            f"detection/splitted_image/{id}_1.png",
+            caption=f"{result1_answer} Score: {result1_score}",
+            use_column_width=True,
+        )
         # show the result
-        col2.image(f"detection/splitted_image/{id}_2.png", caption=f"{result2_answer} Score:{result2_score}", use_column_width=True)
+        col2.image(
+            f"detection/splitted_image/{id}_2.png",
+            caption=f"{result2_answer} Score:{result2_score}",
+            use_column_width=True,
+        )
         # show the result
 
         col3, col4 = st.columns(2)
-        col3.image(f"detection/splitted_image/{id}_3.png", caption=f"{result3_answer} Score: {result3_score}", use_column_width=True)
+        col3.image(
+            f"detection/splitted_image/{id}_3.png",
+            caption=f"{result3_answer} Score: {result3_score}",
+            use_column_width=True,
+        )
         # show the result
 
-        col4.image(f"detection/splitted_image/{id}_4.png", caption=f"{result4_answer} Score:{result4_score}", use_column_width=True)
+        col4.image(
+            f"detection/splitted_image/{id}_4.png",
+            caption=f"{result4_answer} Score:{result4_score}",
+            use_column_width=True,
+        )
         # show the result
 
 
