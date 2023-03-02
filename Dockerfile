@@ -4,6 +4,9 @@ WORKDIR /app
 ENV PYTHONPATH "${PYTHONPATH}:/"
 ENV PORT=8000
 
+# install tesseract
+RUN apt-get update
+RUN apt-get install -y tesseract-ocr tesseract-ocr-eng tesseract-ocr-deu poppler-utils
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org/ | POETRY_HOME=/opt/poetry python && \
     cd /usr/local/bin && \
@@ -18,4 +21,4 @@ RUN poetry install --no-root --no-dev
 # moving the complete app as well as the stored models into the docker workspace
 COPY . /app
 
-ENTRYPOINT ["streamlit", "run", "detection/hello.py", "--server.port=80", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "detection/hello.py", "--server.port=8001", "--server.address=0.0.0.0"]

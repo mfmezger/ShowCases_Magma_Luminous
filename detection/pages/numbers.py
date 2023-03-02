@@ -1,15 +1,25 @@
-import streamlit as st
+"""Script for the Numbers Demo.
+
+This is a streamlit gui. It is used to upload an image and extract the numbers from it.
+"""
 import json
-from dotenv import dotenv_values
-from aleph_alpha_client import AlephAlphaModel
-from aleph_alpha_client import Document, ImagePrompt, QaRequest
-from PIL import Image
-import pandas as pd
 from uuid import uuid4
+
+import pandas as pd
+import streamlit as st
+from aleph_alpha_client import AlephAlphaModel, Document, ImagePrompt, QaRequest
+from dotenv import dotenv_values
+from PIL import Image
 
 
 def extract_numbers(file_path) -> list:
+    """Extracts numbers from a image using luminous magma adapter from aleph alpha.
 
+    :param file_path: Path to stored file
+    :type file_path: str
+    :return: Model Response divided in results_answer and the score.
+    :rtype: str, int
+    """
     config = dotenv_values(".env")
     model = AlephAlphaModel.from_model_name(model_name="luminous-extended", token=config["AA_TOKEN"])
     img = ImagePrompt.from_file(file_path)
@@ -23,15 +33,16 @@ def extract_numbers(file_path) -> list:
         score_answer = result[1][0].score
 
         return result_answer, score_answer
-    except Exception as e:
+    except Exception:
         return "No numbers found", 0
 
 
 def start(id):
+    """Start the processing for the number extraction.
 
-    config = dotenv_values(".env")
-    model = AlephAlphaModel.from_model_name(model_name="luminous-extended", token=config["AA_TOKEN"])
-
+    :param id: id of the uploaded file
+    :type id: str
+    """
     # load image with pillow
     image = Image.open(f"{id}.png")
 
@@ -114,16 +125,32 @@ def start(id):
     # bilder aufklappbar.
     with st.expander("See explanation"):
         col1, col2 = st.columns(2)
-        col1.image(f"detection/splitted_image/{id}_1.png", caption=f"{result1_answer} Score: {result1_score}", use_column_width=True)
+        col1.image(
+            f"detection/splitted_image/{id}_1.png",
+            caption=f"{result1_answer} Score: {result1_score}",
+            use_column_width=True,
+        )
         # show the result
-        col2.image(f"detection/splitted_image/{id}_2.png", caption=f"{result2_answer} Score:{result2_score}", use_column_width=True)
+        col2.image(
+            f"detection/splitted_image/{id}_2.png",
+            caption=f"{result2_answer} Score:{result2_score}",
+            use_column_width=True,
+        )
         # show the result
 
         col3, col4 = st.columns(2)
-        col3.image(f"detection/splitted_image/{id}_3.png", caption=f"{result3_answer} Score: {result3_score}", use_column_width=True)
+        col3.image(
+            f"detection/splitted_image/{id}_3.png",
+            caption=f"{result3_answer} Score: {result3_score}",
+            use_column_width=True,
+        )
         # show the result
 
-        col4.image(f"detection/splitted_image/{id}_4.png", caption=f"{result4_answer} Score:{result4_score}", use_column_width=True)
+        col4.image(
+            f"detection/splitted_image/{id}_4.png",
+            caption=f"{result4_answer} Score:{result4_score}",
+            use_column_width=True,
+        )
         # show the result
 
 
